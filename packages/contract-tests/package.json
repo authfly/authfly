@@ -1,0 +1,9 @@
+{
+  "name": "@authfly/contract-tests",
+  "version": "1.0.0",
+  "description": "Provider-agnostic contract suite: run it against any @authfly/core Provider",
+  "license": "MIT",
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "peerDependencies": { "@authfly/core": "^1.0.0" }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@authfly/provider-stalwart",
+  "version": "1.0.0",
+  "description": "Authfly provider adapter for Stalwart (through the Authfly server, which owns the Stalwart JMAP integration)",
+  "license": "MIT",
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "files": ["src"],
+  "peerDependencies": { "@authfly/core": "^1.0.0" },
+  "repository": { "type": "git", "url": "git+https://github.com/authfly/authfly.git", "directory": "packages/provider-stalwart" }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@authfly/core",
+  "version": "1.0.0",
+  "description": "Authfly provider contract: one JSON schema (schema/contract.json), generated types, capability flags",
+  "license": "MIT",
+  "type": "module",
+  "exports": { ".": "./src/index.ts", "./schema": "./schema/contract.json" },
+  "files": ["src", "schema"],
+  "repository": { "type": "git", "url": "git+https://github.com/authfly/authfly.git", "directory": "packages/core" }
+}

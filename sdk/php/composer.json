@@ -1,0 +1,15 @@
+{
+  "name": "authfly/authfly",
+  "description": "Authfly adapter: JSON API client and OpenID Connect relying party (Stalwart)",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.1",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "files": [
+      "src/Authfly.php",
+      "src/Contract.php"
+    ]
+  }
+}

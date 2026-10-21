@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://authfly.dev/schema/contract/v1.json",
+  "title": "Authfly provider contract v1",
+  "description": "Provider-agnostic auth contract. Every provider adapter implements these operations; widgets and server SDKs depend only on this file. Types for TS, PHP, Python and Go are generated from it (tools/gen-types.ts).",
+  "version": "1.0.0",
+  "$defs": {
+    "Capabilities": {
+      "type": "object",
+      "description": "What the provider supports. Widgets read these flags to decide what to render.",
+      "properties": {
+        "magicLink": {
+          "type": "boolean"
+        },
+        "password": {
+          "type": "boolean"
+        },
+        "social": {
+          "type": "boolean"
+        },
+        "twoFactor": {
+          "type": "boolean",
+          "description": "the 2fa flag"
+        },
+        "webauthn": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "magicLink",
+        "password",
+        "social",
+        "twoFactor",
+        "webauthn"
+      ]
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "stable subject id"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "emailVerified": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "name",
+        "emailVerified"
+      ]
+    },
+    "Session": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "opaque bearer token"
+        },
+        "user": {
+          "$ref": "#/$defs/User"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "password",
+            "magic",
+            "oidc",
+            "social"
+          ]
+        }
+      },
+      "required": [
+        "token",
+        "user"
+      ]
+    },
+    "Sent": {
+      "type": "object",
+      "properties": {
+        "sentTo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "sentTo"
+      ]
+    },
+    "Ok": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "ok"
+      ]
+    },
+    "Export": {
+      "type": "object",
+      "description": "Everything the provider holds about the user (GDPR Art. 15/20, CCPA \u00a71798.110, 152-FZ Art. 14).",
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/User"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "user",
+        "data"
+      ]
+    },
+    "AuthError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "invalid_credentials",
+            "unverified",
+            "account_exists",
+            "invalid_token",
+            "invalid_input",
+            "mfa_required",
+            "unauthenticated",
+            "not_implemented",
+            "error"
+          ]
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "SignInInput": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifier",
+        "password"
+      ]
+    },
+    "SignUpInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "terms": {
+          "type": "string",
+          "description": "accepted terms version"
+        }
+      },
+      "required": [
+        "name",
+        "username",
+        "password"
+      ]
+    },
+    "MagicLinkInput": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string",
+          "description": "set to verify a received link"
+        }
+      },
+      "required": [
+        "identifier"
+      ]
+    },
+    "ResetPasswordInput": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "description": "request: {email}; confirm: {email, token, password}",
+      "required": [
+        "email"
+      ]
+    },
+    "TokenInput": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "token"
+      ]
+    },
+    "DeleteUserInput": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string",
+          "description": "re-authentication"
+        }
+      },
+      "required": [
+        "token",
+        "password"
+      ]
+    }
+  },
+  "operations": {
+    "capabilities": {
+      "input": null,
+      "output": "Capabilities"
+    },
+    "signIn": {
+      "input": "SignInInput",
+      "output": "Session",
+      "capability": "password"
+    },
+    "signUp": {
+      "input": "SignUpInput",
+      "output": "User",
+      "description": "creates the account and sends the verification email"
+    },
+    "verifyEmail": {
+      "input": "TokenInput",
+      "output": "Ok",
+      "description": "confirms the address with the token from the verification email"
+    },
+    "sendMagicLink": {
+      "input": "MagicLinkInput",
+      "output": "Sent",
+      "capability": "magicLink"
+    },
+    "verifyMagicLink": {
+      "input": "MagicLinkInput",
+      "output": "Session",
+      "capability": "magicLink"
+    },
+    "resetPassword": {
+      "input": "ResetPasswordInput",
+      "output": "Ok",
+      "capability": "password"
+    },
+    "session": {
+      "input": "TokenInput",
+      "output": "Session"
+    },
+    "signOut": {
+      "input": "TokenInput",
+      "output": "Ok",
+      "description": "revokes every session of the user"
+    },
+    "exportUser": {
+      "input": "TokenInput",
+      "output": "Export"
+    },
+    "deleteUser": {
+      "input": "DeleteUserInput",
+      "output": "Ok",
+      "description": "erasure; the provider verifies the data is gone"
+    }
+  }
+}

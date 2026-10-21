@@ -1,0 +1,18 @@
+{
+  "name": "authfly-packages",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "sdk/ts"
+  ],
+  "scripts": {
+    "gen": "bun tools/gen-types.ts",
+    "check": "bun tools/gen-types.ts --check && tsc --noEmit -p . && bun test tests/unit && (cd sdk/go && go vet ./... && go test ./...) && python3 -m unittest discover -s sdk/python/tests && php sdk/php/tests/run.php",
+    "contract": "bun tests/contract.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "bun-types": "^1.3.0"
+  }
+}
