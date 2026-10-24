@@ -1,4 +1,4 @@
-# ui8kit/authfly (PHP)
+# authfly/authfly (PHP)
 
 No dependencies. `require 'src/Authfly.php';` or add the folder as a Composer path repository.
 

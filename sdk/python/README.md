@@ -1,6 +1,6 @@
 # authfly (Python)
 
-Standard library only. Copy `authfly.py` into your app, or `pip install ./packages/adapters/python`.
+Standard library only. Copy `authfly.py` into your app, or `pip install ./sdk/python`.
 
 ```python
 from authfly import Authfly, AuthflyApi

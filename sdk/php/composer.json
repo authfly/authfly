@@ -2,6 +2,7 @@
   "name": "authfly/authfly",
   "description": "Authfly adapter: JSON API client and OpenID Connect relying party (Stalwart)",
   "license": "MIT",
+  "homepage": "https://github.com/authfly/authfly",
   "require": {
     "php": ">=8.1",
     "ext-json": "*"

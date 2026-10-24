@@ -2,6 +2,7 @@
   "name": "@authfly/contract-tests",
   "version": "1.0.0",
   "description": "Provider-agnostic contract suite: run it against any @authfly/core Provider",
+  "repository": { "type": "git", "url": "git+https://github.com/authfly/authfly.git", "directory": "packages/contract-tests" },
   "license": "MIT",
   "type": "module",
   "exports": { ".": "./src/index.ts" },
