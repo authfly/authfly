@@ -1,8 +1,8 @@
 {
-  "name": "authfly/authfly",
+  "name": "authfly/sdk-php",
   "description": "Authfly adapter: JSON API client and OpenID Connect relying party (Stalwart)",
   "license": "MIT",
-  "homepage": "https://github.com/authfly/authfly",
+  "homepage": "https://github.com/authfly/sdk-php",
   "require": {
     "php": ">=8.1",
     "ext-json": "*"

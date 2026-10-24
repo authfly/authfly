@@ -1,6 +1,8 @@
-# authfly/authfly (PHP)
+# authfly/sdk-php (PHP)
 
-No dependencies. `require 'src/Authfly.php';` or add the folder as a Composer path repository.
+> **Read-only mirror:** [authfly/sdk-php](https://github.com/authfly/sdk-php) is a read-only mirror of `sdk/php`; develop in [authfly/authfly](https://github.com/authfly/authfly) (`tools/split.sh`).
+
+No dependencies. `require 'src/Authfly.php';` or `composer require authfly/sdk-php`.
 
 ```php
 use Authfly\{Authfly, AuthflyApi};

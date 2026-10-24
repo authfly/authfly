@@ -10,7 +10,7 @@
 | `sdk/ts` | `@authfly/node` | TS server SDK: OIDC relying party (PKCE, ID-token verify, signed cookies) + JSON API client. |
 | `sdk/go` | `github.com/authfly/authfly/sdk/go` | Go SDK: `authfly.New(url, key)` implements `contract.Provider`. |
 | `sdk/python` | `authfly` (PyPI name, unpublished) | Python SDK + generated `authfly_contract.py` (TypedDicts + Provider Protocol). |
-| `sdk/php` | `authfly/authfly` (Composer, unpublished) | PHP SDK + generated `Contract.php` (phpstan shapes + Provider interface). |
+| `sdk/php` | `authfly/sdk-php` (Composer, unpublished; mirror [authfly/sdk-php](https://github.com/authfly/sdk-php)) | PHP SDK + generated `Contract.php` (phpstan shapes + Provider interface). |
 
 ## The contract
 
