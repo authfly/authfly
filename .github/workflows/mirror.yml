@@ -1,0 +1,31 @@
+name: mirror
+# Read-only Composer mirrors: sdk/php -> authfly/sdk-php (same as tools/split.sh).
+# Needs repo secrets MIRROR_SDK_PHP_KEY: private half of a write deploy key on authfly/sdk-php.
+on:
+  push:
+    branches: [main]
+    paths: ['sdk/php/**', '.github/workflows/mirror.yml']
+  workflow_dispatch:
+permissions: { contents: read }
+concurrency: { group: mirror, cancel-in-progress: false }
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - { name: sdk-php, secret: MIRROR_SDK_PHP_KEY }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: split and push (fast-forward only)
+        env:
+          KEY: ${{ secrets[matrix.secret] }}
+          N: ${{ matrix.name }}
+        run: |
+          if [ -z "$KEY" ]; then echo "::warning::${{ matrix.secret }} is not set; mirror $N not synced"; exit 0; fi
+          install -m 600 /dev/null ~/key && printf '%s\n' "$KEY" > ~/key
+          export GIT_SSH_COMMAND="ssh -i ~/key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+          git subtree split --prefix=sdk/php -b split-$N
+          git push "git@github.com:authfly/$N.git" "split-$N:main"
+          rm -f ~/key

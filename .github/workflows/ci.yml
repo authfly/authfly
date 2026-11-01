@@ -1,0 +1,31 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+  workflow_dispatch:
+permissions: { contents: read }
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-go@v5
+        with: { go-version-file: sdk/go/go.mod }
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '8.3' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: bun install --frozen-lockfile
+      - name: types, unit, Go/Python/PHP SDKs
+        run: bun run check
+  mirror-drift:
+    # Informational (not a required check): authfly/sdk-php's tree must equal sdk/php on main.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          git fetch -q --depth=1 https://github.com/authfly/sdk-php.git main
+          a=$(git rev-parse HEAD:sdk/php); b=$(git rev-parse 'FETCH_HEAD^{tree}')
+          [ "$a" = "$b" ] && echo "sdk-php: in sync ($a)" || { echo "::warning::sdk-php mirror differs: source $a, mirror $b"; exit 1; }
