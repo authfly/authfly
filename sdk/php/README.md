@@ -2,6 +2,8 @@
 
 > **Read-only mirror:** [authfly/sdk-php](https://github.com/authfly/sdk-php) is a read-only mirror of `sdk/php`; develop in [authfly/authfly](https://github.com/authfly/authfly) (`tools/split.sh`).
 
+> **Do not edit in the mirror.** Source: https://github.com/authfly/authfly/tree/main/sdk/php — changes are synced to the mirror automatically.
+
 No dependencies. `require 'src/Authfly.php';` or `composer require authfly/sdk-php`.
 
 ```php
