@@ -2,7 +2,7 @@
   "name": "@authfly/provider-stalwart",
   "version": "1.0.0",
   "description": "Authfly provider adapter for Stalwart (through the Authfly server, which owns the Stalwart JMAP integration)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "exports": { ".": "./src/index.ts" },
   "files": ["src"],

@@ -34,4 +34,4 @@ Types are generated: `bun run gen` (writes TS, Go, Python, PHP); `bun run check`
 reads the mails back from Stalwart over JMAP as the test account. Stalwart must pass all; the stubs must answer
 `not_implemented`.
 
-License: MIT, © Auth Fly.
+License: Apache-2.0, © Authfly.

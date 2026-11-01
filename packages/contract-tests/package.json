@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Provider-agnostic contract suite: run it against any @authfly/core Provider",
   "repository": { "type": "git", "url": "git+https://github.com/authfly/authfly.git", "directory": "packages/contract-tests" },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "exports": { ".": "./src/index.ts" },
   "peerDependencies": { "@authfly/core": "^1.0.0" }

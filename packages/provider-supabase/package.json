@@ -2,7 +2,7 @@
   "name": "@authfly/provider-supabase",
   "version": "0.0.0",
   "description": "NOT IMPLEMENTED: placeholder for an Authfly provider adapter for supabase",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "private": true,
   "exports": { ".": "./src/index.ts" },

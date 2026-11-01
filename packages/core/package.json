@@ -2,7 +2,7 @@
   "name": "@authfly/core",
   "version": "1.0.0",
   "description": "Authfly provider contract: one JSON schema (schema/contract.json), generated types, capability flags",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "exports": { ".": "./src/index.ts", "./schema": "./schema/contract.json" },
   "files": ["src", "schema"],
