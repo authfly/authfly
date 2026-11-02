@@ -23,9 +23,17 @@ jobs:
     # Informational (not a required check): authfly/sdk-php's tree must equal sdk/php on main.
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          git fetch -q --depth=1 https://github.com/authfly/sdk-php.git main
-          a=$(git rev-parse HEAD:sdk/php); b=$(git rev-parse 'FETCH_HEAD^{tree}')
+      - name: mirror equals sdk/php (polls up to 10 min for the mirror workflow on this SHA)
+        run: |
+          # The mirror workflow pushes in parallel with this job; poll instead of comparing once (no race).
+          a=$(git rev-parse HEAD:sdk/php); b=
+          for i in $(seq 1 40); do
+            git fetch -q --depth=1 https://github.com/authfly/sdk-php.git main
+            b=$(git rev-parse 'FETCH_HEAD^{tree}')
+            [ "$a" = "$b" ] && break
+            echo "sdk-php: mirror $b != source $a, waiting ($i/40)"; sleep 15
+          done
           [ "$a" = "$b" ] && echo "sdk-php: in sync ($a)" || { echo "::warning::sdk-php mirror differs: source $a, mirror $b"; exit 1; }
